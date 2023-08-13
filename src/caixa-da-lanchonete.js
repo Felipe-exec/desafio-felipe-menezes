@@ -30,14 +30,20 @@ class CaixaDaLanchonete {
         }
     
         let valorDoPedido = 0;
+        let pedido = "";
         for (const item of itens) {
-            const [codigo, quantidade] = item.split(','); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+            const [codigo, quantidade] = item.split(',');
             const produto = this.produtos.find(p => p.codigo === codigo);
             if (produto) {
                 valorDoPedido += produto.valor * parseInt(quantidade);
+                pedido += codigo;
             }
         }
-    
+        
+        if (pedido === "chantily" || pedido === "queijo") {
+            return "Item extra não pode ser pedido sem o principal";
+        }
+
         if (metodoDePagamentoMinusculo === 'dinheiro') {
             return this.formatarValor(valorDoPedido - valorDoPedido * 0.05);
         }
